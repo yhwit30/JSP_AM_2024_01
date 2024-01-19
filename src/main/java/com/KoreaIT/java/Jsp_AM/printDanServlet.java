@@ -20,20 +20,35 @@ public class printDanServlet extends HttpServlet {
 		PrintWriter printWriter = response.getWriter();
 
 		String inputString = request.getParameter("dan");
+		String inputLimit = request.getParameter("limit");
+		String inputColor = request.getParameter("color");
+
 		int dan = 2;
-		if (inputString != null && !inputString.equals(""))
+		if (inputString != null && !inputString.equals("")) {
 			dan = Integer.parseInt(inputString);
-
-		
-		printWriter.append("==" + dan + "단==<br>");
-
-		for (int i = 1; i <= 9; i++) {
-			System.out.println();
-			printWriter.append(dan+ " * " + i + " = " + dan * i + "<br>");
 		}
+
+		int limit = 9;
+		if (inputLimit != null && !inputLimit.equals("")) {
+			limit = Integer.parseInt(inputLimit);
+		}
+
+		if (inputColor== null || inputColor.equals("")) {
+			inputColor = "black";
+		}
+
+		printWriter.print("<body bgcolor = \"#886A08\">");
+
+		printWriter.append("<h1 style=\"color:" + inputColor + "\">==" + dan + "단==</h1>");
+
+		for (int i = 1; i <= limit; i++) {
+			System.out.println();
+//			printWriter.append("<div style=\"color:" + inputColor+"\">" + dan + " * " + i + " = " + dan * i + "<br></div>");
+			printWriter.append(
+					String.format("<div style= \"color:%s\"> %d * %d = %d<br></div>", inputColor, dan, i, dan * i));
+		}
+		printWriter.print("<body/>");
 
 	}
 
 }
-
-
