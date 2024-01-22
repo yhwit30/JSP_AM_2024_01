@@ -27,3 +27,11 @@ title = '제목3',
 SELECT *
 FROM article
 ORDER BY id DESC;
+
+
+INSERT INTO article 
+SET regDate = NOW(),
+title = CONCAT('제목__', RAND()),
+`body` = CONCAT('제목__', RAND());
+
+

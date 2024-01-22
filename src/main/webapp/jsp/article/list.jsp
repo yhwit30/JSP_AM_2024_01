@@ -15,6 +15,8 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 <body>
 
 	<a href="../home/main">메인으로 이동</a>
+	
+	<div><%=page %></div>
 
 	<h2>게시물 목록</h2>
 

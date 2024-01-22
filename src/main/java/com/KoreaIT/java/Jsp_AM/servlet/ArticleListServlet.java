@@ -35,6 +35,7 @@ public class ArticleListServlet extends HttpServlet {
 		String password = "";
 		
 		String inputId = request.getParameter("id");
+		int page = Integer.parseInt(request.getParameter("page"));
 
 		Connection conn = null;
 
@@ -46,7 +47,15 @@ public class ArticleListServlet extends HttpServlet {
 			
 			SecSql sql = SecSql.from("SELECT *");
 			sql.append("FROM article");
-			sql.append("ORDER BY id DESC;");
+			sql.append("ORDER BY id DESC");
+			
+			
+			int limitFrom = (page - 1) * 5;
+			int limitTake = 5;
+			
+			if (limitFrom != -1) {
+				sql.append("LIMIT ?, ?;", limitFrom, limitTake);
+			}
 			
 
 			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
