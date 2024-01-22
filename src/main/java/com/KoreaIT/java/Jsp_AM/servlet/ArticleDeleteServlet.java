@@ -49,8 +49,11 @@ public class ArticleDeleteServlet extends HttpServlet {
 
 			DBUtil.delete(conn, sql);
 			
-			request.setAttribute("deleteId", inputId);
-			request.getRequestDispatcher("/jsp/article/delete.jsp").forward(request, response);
+			response.getWriter().append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list');</script>", inputId));
+			
+			
+//			request.setAttribute("deleteId", inputId);
+//			request.getRequestDispatcher("/jsp/article/delete.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);

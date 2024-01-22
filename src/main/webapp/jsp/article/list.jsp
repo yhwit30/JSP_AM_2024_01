@@ -48,8 +48,6 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 
 
 
-
-
 	<%-- <ul>
 		<%
 		for (Map<String, Object> articleRow : articleRows) {
