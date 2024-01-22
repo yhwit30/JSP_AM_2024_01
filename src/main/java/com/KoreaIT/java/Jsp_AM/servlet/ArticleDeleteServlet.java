@@ -49,9 +49,6 @@ public class ArticleDeleteServlet extends HttpServlet {
 
 			DBUtil.delete(conn, sql);
 			
-		
-
-//			response.getWriter().append(articleRows.toString());
 			request.setAttribute("deleteId", inputId);
 			request.getRequestDispatcher("/jsp/article/delete.jsp").forward(request, response);
 
