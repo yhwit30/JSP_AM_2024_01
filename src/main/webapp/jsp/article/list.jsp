@@ -14,11 +14,43 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 </head>
 <body>
 
-<a href="../home/main">메인으로 이동</a>
+	<a href="../home/main">메인으로 이동</a>
 
-	<h2>게시물 목록 v4</h2>
+	<h2>게시물 목록</h2>
 
-	<ul>
+	<table style="border-collapse: collapse"; border="3px">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>작성날짜</th>
+				<th>제목</th>
+				<th>디테일</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%
+			for (Map<String, Object> articleRow : articleRows) {
+			%>
+
+			<tr style="text-align: center;">
+				<td><%=articleRow.get("id")%>번</td>
+				<td><%=articleRow.get("regDate")%></td>
+				<td><%=articleRow.get("title")%></td>
+				<td><a href="detail?id=<%=articleRow.get("id")%>">디테일</a></td>
+				<td><a href="delete?id=<%=articleRow.get("id")%>">글 삭제</a></td>
+			</tr>
+			<%
+			}
+			%>
+		</tbody>
+	</table>
+
+
+
+
+
+	<%-- <ul>
 		<%
 		for (Map<String, Object> articleRow : articleRows) {
 		%>
@@ -41,7 +73,7 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 		<%
 		}
 		%>
-	</ul>
+	</ul> --%>
 
 </body>
 </html>

@@ -51,7 +51,6 @@ public class ArticleListServlet extends HttpServlet {
 
 			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
 
-//			response.getWriter().append(articleRows.toString());
 			request.setAttribute("articleRows", articleRows);
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 
