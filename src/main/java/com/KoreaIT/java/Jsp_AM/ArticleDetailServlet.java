@@ -31,12 +31,6 @@ public class ArticleDetailServlet extends HttpServlet {
 		String user = "root";
 		String password = "";
 		
-		String inputId = request.getParameter("id");
-		
-		int dan = 2;
-		if (inputId != null && !inputId.equals("")) {
-			dan = Integer.parseInt(inputId);
-		}
 		
 
 		Connection conn = null;
@@ -47,9 +41,10 @@ public class ArticleDetailServlet extends HttpServlet {
 
 			DBUtil dbUtil = new DBUtil(request, response);
 
+			int inputId = Integer.parseInt(request.getParameter("id"));
+			
 			String sql = "SELECT * FROM article ";
 			sql += "where id = " + inputId + ";";
-			
 		
 			Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
 

@@ -13,6 +13,9 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 <title>게시물 목록</title>
 </head>
 <body>
+
+<a href="detail" target="_blank">디테일 시험버튼</a>
+
 	<h2>게시물 목록 v4</h2>
 
 	<ul>
@@ -20,6 +23,7 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 		for (Map<String, Object> articleRow : articleRows) {
 		%>
 		<li><%=articleRow.get("id")%>번, <%=articleRow.get("regDate")%>,<%=articleRow.get("title")%>,<%=articleRow.get("body")%></li>
+		<a href="detail?id=<%=articleRow.get("id")%>" target="_blank">디테일</a>
 		<%
 		}
 		%>
