@@ -19,4 +19,3 @@ public class HomePrintDanServlet extends HttpServlet {
 
 }
 
-
