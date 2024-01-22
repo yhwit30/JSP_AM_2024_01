@@ -13,8 +13,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/list")
-public class ArticleListServlet extends HttpServlet {
+@WebServlet("/article/detail")
+public class ArticleDetailServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,6 +32,12 @@ public class ArticleListServlet extends HttpServlet {
 		String password = "";
 		
 		String inputId = request.getParameter("id");
+		
+		int dan = 2;
+		if (inputId != null && !inputId.equals("")) {
+			dan = Integer.parseInt(inputId);
+		}
+		
 
 		Connection conn = null;
 
@@ -41,13 +47,15 @@ public class ArticleListServlet extends HttpServlet {
 
 			DBUtil dbUtil = new DBUtil(request, response);
 
-			String sql = "SELECT * FROM article;";
-
-			List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
+			String sql = "SELECT * FROM article ";
+			sql += "where id = " + inputId + ";";
+			
+		
+			Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
 
 //			response.getWriter().append(articleRows.toString());
-			request.setAttribute("articleRows", articleRows);
-			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
+			request.setAttribute("articleRow", articleRow);
+			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
@@ -63,3 +71,5 @@ public class ArticleListServlet extends HttpServlet {
 	}
 
 }
+
+
