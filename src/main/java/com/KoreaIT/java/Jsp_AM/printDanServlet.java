@@ -33,8 +33,7 @@ public class printDanServlet extends HttpServlet {
 			limit = Integer.parseInt(inputLimit);
 		}
 
-		inputColor = "white";
-
+		inputColor = "black";
 
 		printWriter.append("<h1 style=\"color:" + inputColor + "\">==" + dan + "단==</h1>");
 
