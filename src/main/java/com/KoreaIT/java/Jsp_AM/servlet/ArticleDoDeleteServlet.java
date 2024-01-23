@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/update")
-public class ArticleUpdateServlet extends HttpServlet {
+@WebServlet("/article/doDelete")
+public class ArticleDoDeleteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,7 +32,6 @@ public class ArticleUpdateServlet extends HttpServlet {
 		String url = "jdbc:mysql://127.0.0.1:3306/JSP_AM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
 		String user = "root";
 		String password = "";
-		
 
 		Connection conn = null;
 
@@ -40,17 +39,16 @@ public class ArticleUpdateServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공!");
 
-			
-//			int inputId = Integer.parseInt(request.getParameter("id"));
-//			
-//			SecSql sql = SecSql.from("SELECT *");
-//			sql.append("FROM article");
-//			sql.append("WHERE id = ?;", inputId);
-//		
-//			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+			int id = Integer.parseInt(request.getParameter("id"));
 
-//			request.setAttribute("articleRow", articleRow);
-			request.getRequestDispatcher("/jsp/article/update.jsp").forward(request, response);
+			SecSql sql = SecSql.from("DELETE");
+			sql.append("FROM article");
+			sql.append("WHERE id = ?;", id);
+
+			DBUtil.delete(conn, sql);
+
+			response.getWriter()
+					.append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list');</script>", id));
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
@@ -65,6 +63,8 @@ public class ArticleUpdateServlet extends HttpServlet {
 		}
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 }
-
-

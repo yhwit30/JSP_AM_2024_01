@@ -34,4 +34,9 @@ SET regDate = NOW(),
 title = CONCAT('제목__', RAND()),
 `body` = CONCAT('제목__', RAND());
 
+UPDATE article
+SET title = 'asdf',
+`body` = 'zcvasdfewr'
+WHERE id = 74;
+
 

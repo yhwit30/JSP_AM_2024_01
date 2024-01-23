@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.Map;
 import com.KoreaIT.java.Jsp_AM.exception.SQLErrorException;
 
 public class DBUtil {
+
 	public static Map<String, Object> selectRow(Connection dbConn, SecSql sql) {
 		List<Map<String, Object>> rows = selectRows(dbConn, sql);
 
@@ -58,6 +60,7 @@ public class DBUtil {
 				rows.add(row);
 			}
 		} catch (SQLException e) {
+			System.out.println("=============Query 예외 발생================\n" + sql);
 			throw new SQLErrorException("SQL 예외, SQL : " + sql, e);
 		} finally {
 			if (rs != null) {
@@ -126,6 +129,7 @@ public class DBUtil {
 			}
 
 		} catch (SQLException e) {
+			System.out.println("=============Query 예외 발생================\n" + sql);
 			throw new SQLErrorException("SQL 예외, SQL : " + sql, e);
 		} finally {
 			if (rs != null) {
@@ -158,6 +162,7 @@ public class DBUtil {
 			stmt = sql.getPreparedStatement(dbConn);
 			affectedRows = stmt.executeUpdate();
 		} catch (SQLException e) {
+			System.out.println("=============Query 예외 발생================\n" + sql);
 			throw new SQLErrorException("SQL 예외, SQL : " + sql, e);
 		} finally {
 			if (stmt != null) {
