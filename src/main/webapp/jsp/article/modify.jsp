@@ -34,7 +34,7 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 			내용 :
 			<textarea type="text" name="body"> <%=articleRow.get("body")%></textarea>
 		</div>
-		<button type="submit">작성</button>
+		<button type="submit">수정</button>
 	</form>
 
 

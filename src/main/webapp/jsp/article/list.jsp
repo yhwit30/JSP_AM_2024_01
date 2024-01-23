@@ -71,20 +71,56 @@ int totalPage = (int) request.getAttribute("totalPage");
 </style>
 
 	<div class="page">
-		<a href="#">◀ </a>
 		<%
-		for (int i = cPage - 3; i <= cPage + 3; i++) {
+		int pageWide = 3; //페이지 보여줄 좌우 각 범위
+		
+		if (cPage > 1) {
+		%>
+		<a href="list?page=1">맨앞</a> &nbsp; &nbsp;
+		<%
+		}
+		
+		if (cPage > (pageWide+1)) {
+			%>
+			<a href="list?page=<%=cPage - (pageWide+1) %>">◀</a> 
+			<%
+			}
+		
+
+		if (cPage > 0 && cPage <= pageWide) {
+		for (int i = 1; i <= 6; i++) {
 		%>
 		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
 		<%
 		}
+		} else if (cPage > pageWide && cPage <= totalPage - pageWide) {
+		for (int i = cPage - pageWide; i <= cPage + pageWide; i++) {
 		%>
-		<a href="#">▶ </a>
+		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
+		<%
+		}
+		} else if (cPage > totalPage - pageWide) {
+		for (int i = totalPage - pageWide; i <= totalPage; i++) {
+		%>
+		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
+		<%
+		}
+		}
+		
+		if (cPage < totalPage - pageWide) {
+			%>
+			<a href="list?page=<%=cPage + (pageWide+1) %>">▶</a> 
+			<%
+			}
+
+		
+		if (cPage < totalPage) {
+		%>
+		 &nbsp;&nbsp;<a href="list?page=<%=totalPage%>">맨뒤</a>
+		<%
+		}
+		%>
 	</div>
-
-
-
-
 
 </body>
 </html>
