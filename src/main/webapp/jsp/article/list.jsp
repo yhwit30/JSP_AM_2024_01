@@ -19,6 +19,10 @@ int cPage = (int) request.getAttribute("page");
 	<a href="../home/main">메인으로 이동</a>
 
 	<h2>게시물 목록</h2>
+	
+	<div><a href="doWrite">글 작성</a></div>
+	
+	<div><a href="doUpdate">글 수정</a></div>
 
 	<table style="border-collapse: collapse" ; border="3px">
 		<thead>
@@ -39,14 +43,16 @@ int cPage = (int) request.getAttribute("page");
 				<td><%=articleRow.get("id")%>번</td>
 				<td><%=articleRow.get("regDate")%></td>
 				<td><%=articleRow.get("title")%></td>
+				
 				<td><a href="detail?id=<%=articleRow.get("id")%>">디테일</a></td>
-				<td><a href="delete?id=<%=articleRow.get("id")%>">글 삭제</a></td>
+				<td><a href="doDelete?id=<%=articleRow.get("id")%>">글 삭제</a></td>
 			</tr>
 			<%
 			}
 			%>
 		</tbody>
 	</table>
+
 
 	<div class="page">
 		<%
@@ -60,7 +66,7 @@ int cPage = (int) request.getAttribute("page");
 
 	<style type="text/css">
 .page {
-	font-size: 1.4rem;
+	font-size: 1rem;
 }
 
 .page>a {
@@ -70,10 +76,10 @@ int cPage = (int) request.getAttribute("page");
 
 .page>a.cPage {
 	color: red;
+	font-size: 1.2rem;
 	text-decoration: underline;
 }
 </style>
-
 
 
 </body>

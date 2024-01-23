@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 import com.KoreaIT.java.Jsp_AM.util.DBUtil;
 import com.KoreaIT.java.Jsp_AM.util.SecSql;
@@ -14,8 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/doDelete")
-public class ArticleDeleteServlet extends HttpServlet {
+@WebServlet("/article/doWrite")
+public class ArticleInsertServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -40,20 +41,37 @@ public class ArticleDeleteServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공!");
 
-			int inputId = Integer.parseInt(request.getParameter("id"));
+			String title = "기본제목";
+			String body = "기본내용";
+			if (request.getParameter("title") != null && request.getParameter("title").length() != 0) {
+				title = request.getParameter("title");
+			}
+			if (request.getParameter("body") != null && request.getParameter("body").length() != 0) {
+				body = request.getParameter("body");
+			}
 			
-			SecSql sql = new SecSql();
+			if(!title.equals("기본제목") || !body.equals("기본내용")) {
+			SecSql sql = SecSql.from("INSERT INTO article");
+			sql.append("SET regDate = NOW(),");
+			sql.append("title = ?,", title);
+			sql.append("`body` = ?;", body);
+			
+			System.out.println(sql);
+			
+			DBUtil.insert(conn, sql);
+			}
+			
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM article");
+			sql.append("ORDER BY id DESC");
+			sql.append("limit 1;");
 
-			sql.append("DELETE FROM article");
-			sql.append("WHERE id = ?;", inputId);
-
-			DBUtil.delete(conn, sql);
+			Map<String, Object> insertRow = DBUtil.selectRow(conn, sql);
 			
-			response.getWriter().append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list');</script>", inputId));
+			int lastId = (int)insertRow.get("id");
 			
-			
-//			request.setAttribute("deleteId", inputId);
-//			request.getRequestDispatcher("/jsp/article/delete.jsp").forward(request, response);
+			request.setAttribute("lastId", lastId);
+			request.getRequestDispatcher("/jsp/article/doWrite.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
