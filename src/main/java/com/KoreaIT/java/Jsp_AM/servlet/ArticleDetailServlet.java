@@ -32,7 +32,6 @@ public class ArticleDetailServlet extends HttpServlet {
 		String url = "jdbc:mysql://127.0.0.1:3306/JSP_AM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
 		String user = "root";
 		String password = "";
-		
 
 		Connection conn = null;
 
@@ -40,12 +39,12 @@ public class ArticleDetailServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공!");
 
-			int inputId = Integer.parseInt(request.getParameter("id"));
-			
+			int id = Integer.parseInt(request.getParameter("id"));
+
 			SecSql sql = SecSql.from("SELECT *");
 			sql.append("FROM article");
-			sql.append("WHERE id = ?;", inputId);
-		
+			sql.append("WHERE id = ?;", id);
+
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 
 			request.setAttribute("articleRow", articleRow);
@@ -64,6 +63,8 @@ public class ArticleDetailServlet extends HttpServlet {
 		}
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 }
-
-

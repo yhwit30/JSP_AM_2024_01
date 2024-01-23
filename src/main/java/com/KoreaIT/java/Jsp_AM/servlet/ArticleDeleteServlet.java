@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 import com.KoreaIT.java.Jsp_AM.util.DBUtil;
 import com.KoreaIT.java.Jsp_AM.util.SecSql;
@@ -31,8 +32,6 @@ public class ArticleDeleteServlet extends HttpServlet {
 		String url = "jdbc:mysql://127.0.0.1:3306/JSP_AM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
 		String user = "root";
 		String password = "";
-		
-		
 
 		Connection conn = null;
 
@@ -40,20 +39,16 @@ public class ArticleDeleteServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공!");
 
-			int inputId = Integer.parseInt(request.getParameter("id"));
-			
-			SecSql sql = new SecSql();
+			int id = Integer.parseInt(request.getParameter("id"));
 
-			sql.append("DELETE FROM article");
-			sql.append("WHERE id = ?;", inputId);
+			SecSql sql = SecSql.from("DELETE");
+			sql.append("FROM article");
+			sql.append("WHERE id = ?;", id);
 
 			DBUtil.delete(conn, sql);
-			
-			response.getWriter().append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list');</script>", inputId));
-			
-			
-//			request.setAttribute("deleteId", inputId);
-//			request.getRequestDispatcher("/jsp/article/delete.jsp").forward(request, response);
+
+			response.getWriter()
+					.append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list');</script>", id));
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
@@ -68,6 +63,8 @@ public class ArticleDeleteServlet extends HttpServlet {
 		}
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 }
-
-

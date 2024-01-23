@@ -29,4 +29,14 @@
     <servlet-name>ArticleListServlet</servlet-name>
     <url-pattern>/ArticleListServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>asdfasdf</display-name>
+    <servlet-name>asdfasdf</servlet-name>
+    <servlet-class>asdfasdf</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>asdfasdf</servlet-name>
+    <url-pattern>/asdfasdf</url-pattern>
+  </servlet-mapping>
 </web-app>

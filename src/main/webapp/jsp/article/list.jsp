@@ -5,8 +5,8 @@
 
 <%
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
-int totalPage = (int) request.getAttribute("totalPage");
 int cPage = (int) request.getAttribute("page");
+int totalPage = (int) request.getAttribute("totalPage");
 %>
 <!DOCTYPE html>
 <html>
@@ -15,22 +15,22 @@ int cPage = (int) request.getAttribute("page");
 <title>게시물 목록</title>
 </head>
 <body>
-
-	<a href="../home/main">메인으로 이동</a>
+	<div>
+		<a href="../home/main">메인으로 이동</a>
+	</div>
+	<div>
+		<a href="write">글쓰기</a>
+	</div>
 
 	<h2>게시물 목록</h2>
-	
-	<div><a href="doWrite">글 작성</a></div>
-	
-	<div><a href="doUpdate">글 수정</a></div>
 
-	<table style="border-collapse: collapse" ; border="3px">
+	<table style="border-collapse: collapse; border-color: green"
+		border="1px">
 		<thead>
 			<tr>
 				<th>번호</th>
 				<th>작성날짜</th>
 				<th>제목</th>
-				<th>디테일</th>
 				<th>삭제</th>
 			</tr>
 		</thead>
@@ -38,14 +38,11 @@ int cPage = (int) request.getAttribute("page");
 			<%
 			for (Map<String, Object> articleRow : articleRows) {
 			%>
-
 			<tr style="text-align: center;">
-				<td><%=articleRow.get("id")%>번</td>
+				<td><%=articleRow.get("id")%></td>
 				<td><%=articleRow.get("regDate")%></td>
-				<td><%=articleRow.get("title")%></td>
-				
-				<td><a href="detail?id=<%=articleRow.get("id")%>">디테일</a></td>
-				<td><a href="doDelete?id=<%=articleRow.get("id")%>">글 삭제</a></td>
+				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
+				<td><a href="doDelete?id=<%=articleRow.get("id")%>">del</a></td>
 			</tr>
 			<%
 			}
@@ -53,20 +50,9 @@ int cPage = (int) request.getAttribute("page");
 		</tbody>
 	</table>
 
-
-	<div class="page">
-		<%
-		for (int i = 1; i <= totalPage; i++) {
-		%>
-		<a class="<%=cPage == i ? "cPage" : "" %>" href="list?page=<%=i%>"><%=i%></a>
-		<%
-		}
-		%>
-	</div>
-
 	<style type="text/css">
 .page {
-	font-size: 1rem;
+	font-size: 1.4rem;
 }
 
 .page>a {
@@ -76,10 +62,21 @@ int cPage = (int) request.getAttribute("page");
 
 .page>a.cPage {
 	color: red;
-	font-size: 1.2rem;
 	text-decoration: underline;
 }
 </style>
+
+	<div class="page">
+		<%
+		for (int i = 1; i <= totalPage; i++) {
+		%>
+		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
+		<%
+		}
+		%>
+	</div>
+
+
 
 
 </body>

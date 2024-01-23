@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/doUpdate")
+@WebServlet("/article/update")
 public class ArticleUpdateServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -50,7 +50,7 @@ public class ArticleUpdateServlet extends HttpServlet {
 //			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 
 //			request.setAttribute("articleRow", articleRow);
-			request.getRequestDispatcher("/jsp/article/doUpdate.jsp").forward(request, response);
+			request.getRequestDispatcher("/jsp/article/update.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);

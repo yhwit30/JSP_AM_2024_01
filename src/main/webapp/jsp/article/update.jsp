@@ -10,11 +10,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시물 수정</title>
 </head>
 <body>
 
-	<h1>Hello</h1>
+	<h1>Hello, not ready yet ^-^</h1>
 	<a href="list">목록으로 가기</a>
 
 </body>
