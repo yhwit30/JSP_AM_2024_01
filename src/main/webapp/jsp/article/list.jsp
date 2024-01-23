@@ -5,6 +5,8 @@
 
 <%
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
+int totalPage = (int) request.getAttribute("totalPage");
+int cPage = (int) request.getAttribute("page");
 %>
 <!DOCTYPE html>
 <html>
@@ -15,12 +17,10 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 <body>
 
 	<a href="../home/main">메인으로 이동</a>
-	
-	<div><%=page %></div>
 
 	<h2>게시물 목록</h2>
 
-	<table style="border-collapse: collapse"; border="3px">
+	<table style="border-collapse: collapse" ; border="3px">
 		<thead>
 			<tr>
 				<th>번호</th>
@@ -48,32 +48,33 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 		</tbody>
 	</table>
 
-
-
-	<%-- <ul>
+	<div class="page">
 		<%
-		for (Map<String, Object> articleRow : articleRows) {
+		for (int i = 1; i <= totalPage; i++) {
 		%>
-		<li><%=articleRow.get("id")%>번,<%=articleRow.get("regDate")%>,<%=articleRow.get("title")%>,<%=articleRow.get("body")%></li>
-		<a href="detail?id=<%=articleRow.get("id")%>">디테일</a> 
-		<br>
-		<a href="delete?id=<%=articleRow.get("id")%>">글 삭제</a> 
+		<a class="<%=cPage == i ? "cPage" : "" %>" href="list?page=<%=i%>"><%=i%></a>
 		<%
 		}
 		%>
-	</ul>
+	</div>
 
-	<h2>게시물 목록 v3</h2>
+	<style type="text/css">
+.page {
+	font-size: 1.4rem;
+}
 
-	<ul>
-		<%
-		for (int i = 0; i < articleRows.size(); i++) {
-		%>
-		<li><%=articleRows.get(i).get("id")%>번, <%=articleRows.get(i).get("regDate")%>,<%=articleRows.get(i).get("title")%>,<%=articleRows.get(i).get("body")%></li>
-		<%
-		}
-		%>
-	</ul> --%>
+.page>a {
+	color: black;
+	text-decoration: none;
+}
+
+.page>a.cPage {
+	color: red;
+	text-decoration: underline;
+}
+</style>
+
+
 
 </body>
 </html>

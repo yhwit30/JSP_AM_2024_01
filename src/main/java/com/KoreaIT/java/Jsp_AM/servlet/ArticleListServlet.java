@@ -33,34 +33,36 @@ public class ArticleListServlet extends HttpServlet {
 		String url = "jdbc:mysql://127.0.0.1:3306/JSP_AM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
 		String user = "root";
 		String password = "";
-		
-		String inputId = request.getParameter("id");
-		int page = Integer.parseInt(request.getParameter("page"));
 
 		Connection conn = null;
 
 		try {
 			conn = DriverManager.getConnection(url, user, password);
-			response.getWriter().append("연결 성공!");
 
-//			String sql = "SELECT * FROM article order by id desc;";
+			int page = 1;
+			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+
+			int itemsInPage = 10;
+			int limitFrom = (page - 1) * itemsInPage;
 			
-			SecSql sql = SecSql.from("SELECT *");
+			SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
+			sql.append("FROM article");
+			
+			int totalCnt = DBUtil.selectRowIntValue(conn, sql);
+			int totalPage = (int) Math.ceil(totalCnt / (double)itemsInPage);
+			
+			sql = SecSql.from("SELECT *");
 			sql.append("FROM article");
 			sql.append("ORDER BY id DESC");
-			
-			
-			int limitFrom = (page - 1) * 5;
-			int limitTake = 5;
-			
-			if (limitFrom != -1) {
-				sql.append("LIMIT ?, ?;", limitFrom, limitTake);
-			}
-			
+			sql.append("LIMIT ?, ?;", limitFrom, itemsInPage);
 
 			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
 
 			request.setAttribute("articleRows", articleRows);
+			request.setAttribute("totalPage", totalPage);
+			request.setAttribute("page", page);
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 
 		} catch (SQLException e) {
