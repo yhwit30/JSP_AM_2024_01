@@ -71,17 +71,21 @@ int totalPage = (int) request.getAttribute("totalPage");
 </style>
 
 	<div class="page">
+		<a href="#">◀ </a>
 		<%
-		for (int i = 1; i <= totalPage; i++) {
+		for (int i = cPage - 3; i <= cPage + 3; i++) {
 		%>
 		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
 		<%
 		}
 		%>
+		<a href="#">▶ </a>
 	</div>
+
 
 
 
 
 </body>
 </html>
+

@@ -25,8 +25,15 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 		</li>
 		<li>내용 : <%=articleRow.get("body")%>
 		</li>
-		<a href="list">목록으로 돌아가기</a>
 	</ul>
+	<div>
+		<a href="modify?id=<%=articleRow.get("id")%>">수정</a> 
+		<a href="doDelete?id=<%=articleRow.get("id")%>">del</a>
+	</div>
+
+	<div>
+		<a style="color: green" href="list">리스트로 돌아가기</a>
+	</div>
 
 </body>
 </html>
