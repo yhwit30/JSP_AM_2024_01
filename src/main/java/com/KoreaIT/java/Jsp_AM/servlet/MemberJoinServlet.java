@@ -38,8 +38,6 @@ public class MemberJoinServlet extends HttpServlet {
 			////
 			
 			
-			
-			
 			request.getRequestDispatcher("/jsp/member/join.jsp").forward(request, response);
 			////
 			

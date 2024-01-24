@@ -12,35 +12,61 @@
 <!-- <a href="https://www.naver.com" onclick="if(confirm('진짜 네이버로 이동??')==false) return false">네이버(시험버튼)</a> -->
 
 <script type="text/javascript">
-		function JoinForm_submit(form){
-			form.loginId.value = form.loginId.value.trim();
-			
-			if(form.loginId.value.length == 0){
-				alert('아이디를 입력해주세요');
-				form.loginId.focus();
-				return;
-			}
-			if(form.loginPw.value.length == 0){
-				alert('비밀번호를 입력해주세요');
-				form.loginId.focus();
-				return;
-			}
-			if(form.loginPwConfirm.value.length == 0){
-				alert('비밀번호 확인을 입력해주세요');
-				form.loginId.focus();
-				return;
-			}
-			if(form.name.value.length == 0){
-				alert('이름을 입력해주세요');
-				form.loginId.focus();
-				return;
-			}
+
+	var JoinForm_submitDone = false;
+	function JoinForm_submit(form) {
+		if(JoinForm_submitDone){
+			alert('이미 처리중입니다');
+			return;
 		}
+//
+		var loginId = form.loginId.value.trim();
+		var loginPw = form.loginPw.value.trim();
+		var loginPwConfirm = form.loginPwConfirm.value.trim();
+		var name = form.name.value.trim();
+
+		console.log("form.loginId.value :" + loginId);
+		console.log("form.loginPw.value :" + loginPw);
+		console.log("form.loginPwConfirm.value :" + loginPwConfirm);
+		console.log("form.name.value :" + name);
+
+		if (loginId.length == 0) {
+			alert('아이디를 입력해주세요');
+			form.loginId.focus();
+			return;
+		}
+		if (loginPw.length == 0) {
+			alert('비밀번호를 입력해주세요');
+			form.loginPw.focus();
+			return;
+		}
+		if (loginPwConfirm.length == 0) {
+			alert('비밀번호 확인을 입력해주세요');
+			form.loginPwConfirm.focus();
+			return;
+		}
+
+		if (loginPw != loginPwConfirm) {
+			alert('비밀번호가 일치하지 않습니다.');
+			form.loginPw.focus();
+			return;
+		}
+
+		if (name.length == 0) {
+			alert('이름을 입력해주세요');
+			form.name.focus();
+			return;
+		}
+
+		JoinForm_submitDone = true;
+		form.submit();
+		
+	}
 </script>
 
 
 
-	<form action="doJoin" onsubmit="JoinForm_submit(this); return false">
+	<form method="post" action="doJoin" onsubmit="JoinForm_submit(this); return false;">
 		<div>
 			아이디 : <input autocomplete="off" type="text" placeholder="아이디 입력" name="loginId" />
 		</div>
