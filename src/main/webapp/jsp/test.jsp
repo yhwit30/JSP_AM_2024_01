@@ -11,10 +11,10 @@
 </head>
 <body>
 
-<h2>hello this is test.jsp</h2>
+	<h2>hello this is test.jsp</h2>
 
-
-<form method="POST" action="test">
+	<!-- method="POST" -->
+	<form action="test">
 		<div>
 			제목 : <input type="text" placeholder="제목을 입력해주세요" name="title" />
 		</div>
@@ -24,7 +24,8 @@
 		</div>
 		<button type="submit">작성</button>
 	</form>
-	
+
+	<a href="article/list">go to list</a>
 
 </body>
 </html>

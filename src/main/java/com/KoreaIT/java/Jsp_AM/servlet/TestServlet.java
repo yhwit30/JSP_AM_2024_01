@@ -37,19 +37,27 @@ public class TestServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(url, user, password);
 
-			String title = request.getParameter("title");
-			String body = request.getParameter("body");
+			String title = "값없음";
+			String body = "값없음";
+					
+			if (request.getParameter("title") != null && request.getParameter("title").length() != 0) {
+				title = request.getParameter("title");
+			}
+			if (request.getParameter("body") != null && request.getParameter("body").length() != 0) {
+				body =request.getParameter("body");
+			}
 
-			SecSql sql = SecSql.from("INSERT INTO article");
-			sql.append("SET regDate = NOW(),");
-			sql.append("title = ?,", title);
-			sql.append("`body` = ?;", body);
-
-			int id = DBUtil.insert(conn, sql);
+			if(!title.equals("값없음") && !body.equals("값없음")) {
+				
+				SecSql sql = SecSql.from("INSERT INTO article");
+				sql.append("SET regDate = NOW(),");
+				sql.append("title = ?,", title);
+				sql.append("`body` = ?;", body);
+				
+				DBUtil.insert(conn, sql);
+			}
 			
 			request.getRequestDispatcher("/jsp/test.jsp").forward(request, response);
-			
-			
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
