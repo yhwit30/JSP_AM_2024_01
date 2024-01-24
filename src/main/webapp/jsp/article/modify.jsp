@@ -27,6 +27,7 @@ int cPage = (int) request.getAttribute("page");
 	</div>
 	<form method="POST" action="doModify">
 		<input type="hidden" value="<%=articleRow.get("id")%>" name="id" />
+		<input type="hidden" value="<%=cPage%>" name="page" />
 		<div>
 			제목 : <input type="text" name="title"
 				value="<%=articleRow.get("title")%>" />

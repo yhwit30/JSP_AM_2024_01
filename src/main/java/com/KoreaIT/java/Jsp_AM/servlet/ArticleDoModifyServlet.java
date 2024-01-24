@@ -39,6 +39,14 @@ public class ArticleDoModifyServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(url, user, password);
 
+			//해당 게시글이 있는 목록페이지
+			int page = 1;
+
+			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+			
+			
 			int id = Integer.parseInt(request.getParameter("id"));
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
@@ -52,7 +60,7 @@ public class ArticleDoModifyServlet extends HttpServlet {
 			DBUtil.update(conn, sql);
 
 			response.getWriter()
-					.append(String.format("<script>alert('%d번 글이 수정되었습니다.'); location.replace('detail?id=%d');</script>", id, id));
+					.append(String.format("<script>alert('%d번 글이 수정되었습니다.'); location.replace('detail?id=%d&page=%d');</script>", id, id, page));
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
