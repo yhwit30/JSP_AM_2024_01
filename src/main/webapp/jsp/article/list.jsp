@@ -19,14 +19,11 @@ int totalPage = (int) request.getAttribute("totalPage");
 		<a href="../test">testing</a>
 	</div>
 	<div>
-		<a href="../member/register">회원가입</a>
-	</div>
-
-	<br>
-
-	<div>
 		<a href="../home/main">메인으로 이동</a>
 	</div>
+	
+	<br>
+	
 	<div>
 		<a href="write">글쓰기</a>
 	</div>

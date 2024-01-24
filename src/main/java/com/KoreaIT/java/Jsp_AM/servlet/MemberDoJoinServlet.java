@@ -16,8 +16,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/member/doRegister")
-public class MemberDoRegisterServlet extends HttpServlet {
+@WebServlet("/member/doJoin")
+public class MemberDoJoinServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -53,7 +53,7 @@ public class MemberDoRegisterServlet extends HttpServlet {
 			
 			if(loginId.equals(articleRow.get("loginId"))) {
 				response.getWriter().append(
-						String.format("<script>alert('이미 있는 아이디야'); location.replace('register');</script>"));
+						String.format("<script>alert('이미 있는 아이디야'); location.replace('join');</script>"));
 			}
 			
 			
@@ -71,7 +71,7 @@ public class MemberDoRegisterServlet extends HttpServlet {
 			
 			if (loginPw.equals(loginPwConfirm) == false) {
 				response.getWriter().append(
-						String.format("<script>alert('비밀번호 다시 확인해'); location.replace('register');</script>"));
+						String.format("<script>alert('비밀번호 다시 확인해'); location.replace('join');</script>"));
 
 			}
 			int id = -1; // 지역전역변수 때문에
@@ -88,11 +88,11 @@ public class MemberDoRegisterServlet extends HttpServlet {
 
 			if (id == -1) {
 				response.getWriter().append(
-						String.format("<script>alert('제대로 입력하시오!!'); location.replace('register');</script>"));
+						String.format("<script>alert('제대로 입력하시오!!'); location.replace('join');</script>"));
 			}
 
 			response.getWriter().append(String
-					.format("<script>alert('%d번 회원이 등록되었습니다.'); location.replace('../article/list');</script>", id));
+					.format("<script>alert('%d번 회원이 등록되었습니다.'); location.replace('../home/main');</script>", id));
 
 			///////////
 

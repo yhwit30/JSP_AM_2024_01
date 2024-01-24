@@ -7,10 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>welcome to login page~! 둥글게 둥글게 짝 손뼉을 치면서 짝</h2>
+	<h2>welcome to login page~!</h2>
 
 
-	<form action="doRegister">
+	<form action="doLogin">
 		<div>
 			아이디 : <input type="text" name="loginId" />
 		</div>
