@@ -4,6 +4,7 @@
 	pageEncoding="UTF-8"%>
 <%
 Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
+int cPage = (int) request.getAttribute("page");
 %>
 
 <!DOCTYPE html>
@@ -39,7 +40,7 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 
 
 	<div>
-		<a style="color: green" href="list">목록으로 돌아가기</a>
+		<a style="color: green" href="list?page=<%=cPage%>">목록으로 돌아가기</a>
 	</div>
 </body>
 </html>

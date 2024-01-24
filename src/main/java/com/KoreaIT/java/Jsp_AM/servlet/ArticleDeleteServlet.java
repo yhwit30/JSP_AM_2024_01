@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/modify")
-public class ArticleModifyServlet extends HttpServlet {
+@WebServlet("/article/delete")
+public class ArticleDeleteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -45,6 +45,7 @@ public class ArticleModifyServlet extends HttpServlet {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 			
+			//해당 게시글 찾기
 			int id = Integer.parseInt(request.getParameter("id"));
 
 			SecSql sql = SecSql.from("SELECT *");
@@ -55,7 +56,7 @@ public class ArticleModifyServlet extends HttpServlet {
 
 			request.setAttribute("page", page);
 			request.setAttribute("articleRow", articleRow);
-			request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
+			request.getRequestDispatcher("/jsp/article/delete.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
@@ -68,12 +69,10 @@ public class ArticleModifyServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

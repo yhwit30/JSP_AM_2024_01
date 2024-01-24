@@ -39,6 +39,12 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공!");
 
+			int page = 1;
+
+			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+			
 			int id = Integer.parseInt(request.getParameter("id"));
 
 			SecSql sql = SecSql.from("DELETE");
@@ -48,7 +54,7 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 			DBUtil.delete(conn, sql);
 
 			response.getWriter()
-					.append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list');</script>", id));
+					.append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list?page=%d');</script>", id, page));
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);

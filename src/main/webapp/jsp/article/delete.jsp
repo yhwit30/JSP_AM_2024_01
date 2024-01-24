@@ -1,8 +1,11 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.Map"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
-int deleteId = (int) request.getAttribute("deleteId");
+Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
+int cPage = (int) request.getAttribute("page");
 %>
 <!DOCTYPE html>
 <html>
@@ -12,9 +15,23 @@ int deleteId = (int) request.getAttribute("deleteId");
 </head>
 <body>
 
-<h2><%=deleteId %> 번 게시물이 삭제되었습니다.</h2>
-<a href="list">목록으로 이동</a>
+
+	<%-- <h2><%=articleRow.get("id")%>
+		번 게시물이 삭제되었습니다.
+	</h2>
+	<a href="list?page=<%=cPage%>">목록으로 이동</a> --%>
+
+<form name="hiddenForm" method="POST" action="doDelete">
+		<input type="hidden" value="<%=articleRow.get("id")%>" name="id" />
+		<input type="hidden" value="<%=cPage%>" name="page" />
+	</form>
+
+
+<script>
+document.hiddenForm.submit();
+	</script>
+
 
 
 </body>
-</html> --%>
+</html>
