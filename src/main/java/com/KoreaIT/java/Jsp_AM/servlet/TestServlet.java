@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import com.KoreaIT.java.Jsp_AM.config.Config;
+import com.KoreaIT.java.Jsp_AM.exception.SQLErrorException;
 import com.KoreaIT.java.Jsp_AM.util.DBUtil;
 import com.KoreaIT.java.Jsp_AM.util.SecSql;
 
@@ -35,6 +36,7 @@ public class TestServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
+			/////
 			String title = "값없음";
 			String body = "값없음";
 					
@@ -45,7 +47,7 @@ public class TestServlet extends HttpServlet {
 				body =request.getParameter("body");
 			}
 
-			if(!title.equals("값없음") && !body.equals("값없음")) {
+			if(!title.equals("값없음") || !body.equals("값없음")) {
 				
 				SecSql sql = SecSql.from("INSERT INTO article");
 				sql.append("SET regDate = NOW(),");
@@ -56,9 +58,13 @@ public class TestServlet extends HttpServlet {
 			}
 			
 			request.getRequestDispatcher("/jsp/test.jsp").forward(request, response);
+			/////
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
+		} catch (SQLErrorException e) {
+			e.getOrigin().printStackTrace();
+
 		} finally {
 			try {
 				if (conn != null && !conn.isClosed()) {

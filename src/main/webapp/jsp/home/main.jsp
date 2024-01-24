@@ -11,6 +11,10 @@
 
 	<h1>MAIN</h1>
 
+	<div>
+		<a href="../test">testing</a>
+	</div>
+
 	<ul>
 		<li><a href="../article/list">게시물 목록으로 이동</a></li>
 		<li><a href="../member/join">회원가입</a></li>

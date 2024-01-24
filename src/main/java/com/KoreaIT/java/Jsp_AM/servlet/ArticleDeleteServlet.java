@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import com.KoreaIT.java.Jsp_AM.config.Config;
+import com.KoreaIT.java.Jsp_AM.exception.SQLErrorException;
 import com.KoreaIT.java.Jsp_AM.util.DBUtil;
 import com.KoreaIT.java.Jsp_AM.util.SecSql;
 
@@ -29,20 +30,20 @@ public class ArticleDeleteServlet extends HttpServlet {
 			System.out.println("클래스가 없습니다.");
 			e.printStackTrace();
 		}
-	
+
 		Connection conn = null;
 
 		try {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
-			//해당 게시글이 있는 목록페이지
+			// 해당 게시글이 있는 목록페이지
 			int page = 1;
 
 			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
-			
-			//해당 게시글 찾기
+
+			// 해당 게시글 찾기
 			int id = Integer.parseInt(request.getParameter("id"));
 
 			SecSql sql = SecSql.from("SELECT *");
@@ -57,6 +58,9 @@ public class ArticleDeleteServlet extends HttpServlet {
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
+		} catch (SQLErrorException e) {
+			e.getOrigin().printStackTrace();
+
 		} finally {
 			try {
 				if (conn != null && !conn.isClosed()) {

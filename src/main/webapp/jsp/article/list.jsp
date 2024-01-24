@@ -15,9 +15,7 @@ int totalPage = (int) request.getAttribute("totalPage");
 <title>게시물 목록</title>
 </head>
 <body>
-	<div>
-		<a href="../test">testing</a>
-	</div>
+
 	<div>
 		<a href="../home/main">메인으로 이동</a>
 	</div>
