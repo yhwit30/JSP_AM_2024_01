@@ -14,8 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/register")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/member/register")
+public class MemberRegisterServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -36,10 +36,30 @@ public class RegisterServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(url, user, password);
+			
+			////
+			
+//			String title = request.getParameter("title");
+//			String body = request.getParameter("body");
+//
+//			SecSql sql = SecSql.from("INSERT INTO article");
+//			sql.append("SET regDate = NOW(),");
+//			sql.append("title = ?,", title);
+//			sql.append("`body` = ?;", body);
+//
+//			int id = DBUtil.insert(conn, sql);
+//
+//			response.getWriter()
+//					.append(String.format("<script>alert('%d번 글이 등록되었습니다.'); location.replace('list');</script>", id));
 
 			
-			request.getRequestDispatcher("/jsp/register.jsp").forward(request, response);
-
+			
+			
+			
+			
+			request.getRequestDispatcher("/jsp/member/register.jsp").forward(request, response);
+			////
+			
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
 		} finally {
