@@ -16,6 +16,12 @@ int totalPage = (int) request.getAttribute("totalPage");
 </head>
 <body>
 	<div>
+		<a href="../test">testing</a>
+	</div>
+
+	<br>
+
+	<div>
 		<a href="../home/main">메인으로 이동</a>
 	</div>
 	<div>
@@ -25,8 +31,8 @@ int totalPage = (int) request.getAttribute("totalPage");
 
 	<h2>게시물 목록</h2>
 
-	<table style="border-collapse: collapse; border-color: green"
-		border="1px">
+	<table class="table"
+		style="border-collapse: collapse; border-color: green" border="1px">
 		<thead>
 			<tr>
 				<th>번호</th>
@@ -43,9 +49,12 @@ int totalPage = (int) request.getAttribute("totalPage");
 			<tr style="text-align: center;">
 				<td><%=articleRow.get("id")%></td>
 				<td><%=articleRow.get("regDate")%></td>
-				<td><a href="detail?id=<%=articleRow.get("id")%>&page=<%=cPage%>"><%=articleRow.get("title")%></a></td>
-				<td><a href="modify?id=<%=articleRow.get("id")%>&page=<%=cPage%>">수정</a></td>
-				<td><a href="delete?id=<%=articleRow.get("id")%>&page=<%=cPage%>">del</a></td>
+				<td><a
+					href="detail?id=<%=articleRow.get("id")%>&page=<%=cPage%>"><%=articleRow.get("title")%></a></td>
+				<td><a
+					href="modify?id=<%=articleRow.get("id")%>&page=<%=cPage%>">수정</a></td>
+				<td><a
+					href="delete?id=<%=articleRow.get("id")%>&page=<%=cPage%>">del</a></td>
 			</tr>
 			<%
 			}
@@ -53,39 +62,21 @@ int totalPage = (int) request.getAttribute("totalPage");
 		</tbody>
 	</table>
 
-	<style type="text/css">
-.page {
-	font-size: 1rem;
-}
-
-.page>a {
-	color: black;
-	text-decoration: none;
-}
-
-.page>a.cPage {
-	color: red;
-	text-decoration: underline;
-	font-size: 1.2rem;
-}
-</style>
-
 	<div class="page">
 		<%
 		int pageWide = 3; //페이지 보여줄 좌우 각 범위
-		
+
 		if (cPage > 1) {
 		%>
 		<a href="list?page=1">맨앞</a> &nbsp; &nbsp;
 		<%
 		}
-		
-		if (cPage > (pageWide+1)) {
-			%>
-			<a href="list?page=<%=cPage - (pageWide+1) %>">◀</a> 
-			<%
-			}
-		
+
+		if (cPage > (pageWide + 1)) {
+		%>
+		<a href="list?page=<%=cPage - (pageWide + 1)%>">◀</a>
+		<%
+		}
 
 		if (cPage > 0 && cPage <= pageWide) {
 		for (int i = 1; i <= 6; i++) {
@@ -106,21 +97,92 @@ int totalPage = (int) request.getAttribute("totalPage");
 		<%
 		}
 		}
-		
-		if (cPage < totalPage - pageWide) {
-			%>
-			<a href="list?page=<%=cPage + (pageWide+1) %>">▶</a> 
-			<%
-			}
 
-		
+		if (cPage < totalPage - pageWide) {
+		%>
+		<a href="list?page=<%=cPage + (pageWide + 1)%>">▶</a>
+		<%
+		}
+
 		if (cPage < totalPage) {
 		%>
-		 &nbsp;&nbsp;<a href="list?page=<%=totalPage%>">맨뒤</a>
+		&nbsp;&nbsp;<a href="list?page=<%=totalPage%>">맨뒤</a>
 		<%
 		}
 		%>
 	</div>
+
+	<div class="page page2">
+		<%
+		int pageSize = 10;
+		int from = ((cPage - 1) / pageSize) * pageSize + 1;
+		int end = from + pageSize - 1;
+		if (end > totalPage) {
+			end = totalPage;
+		}
+
+		if (cPage > 1) {
+		%>
+		<a href="list?page=1">맨앞</a> &nbsp; &nbsp;
+		<%
+		}
+
+		if (from > pageSize) {
+		%>
+		<a href="list?page=<%=from - pageSize%>">◀</a>
+		<%
+		}
+
+		for (int i = from; i <= end; i++) {
+		%>
+		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
+		<%
+		}
+
+		if (end < totalPage) {
+		%>
+		<a href="list?page=<%=from + pageSize%>">▶</a>
+		<%
+		}
+
+		if (cPage < totalPage) {
+		%>
+		&nbsp;&nbsp;<a href="list?page=<%=totalPage%>">맨뒤</a>
+		<%
+		}
+		%>
+
+
+	</div>
+
+
+	<style type="text/css">
+h2 {
+	text-align: center;
+}
+
+.table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.page {
+	font-size: 1rem;
+	text-align: center;
+}
+
+.page>a {
+	color: black;
+	text-decoration: none;
+}
+
+.page>a.cPage {
+	color: red;
+	text-decoration: underline;
+	font-size: 1.2rem;
+}
+</style>
+
 
 </body>
 </html>
