@@ -12,6 +12,7 @@
 <body>
 
 	<h2>hello this is test.jsp</h2>
+	<h2>안녕 테스트서버에 온 걸 환영~</h2>
 
 	<!-- method="POST" -->
 	<form action="test">

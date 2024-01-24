@@ -62,7 +62,8 @@ int totalPage = (int) request.getAttribute("totalPage");
 		</tbody>
 	</table>
 
-	<div class="page">
+	<br>
+	<%-- <div class="page"> //첨 생각한 페이징
 		<%
 		int pageWide = 3; //페이지 보여줄 좌우 각 범위
 
@@ -110,7 +111,9 @@ int totalPage = (int) request.getAttribute("totalPage");
 		<%
 		}
 		%>
-	</div>
+	</div> --%>
+
+	<br>
 
 	<div class="page page2">
 		<%
@@ -129,7 +132,7 @@ int totalPage = (int) request.getAttribute("totalPage");
 
 		if (from > pageSize) {
 		%>
-		<a href="list?page=<%=from - pageSize%>">◀</a>
+		<a href="list?page=<%=from - 1%>">◀</a>
 		<%
 		}
 
@@ -154,6 +157,59 @@ int totalPage = (int) request.getAttribute("totalPage");
 
 
 	</div>
+<%-- <div class="page"> //강사버전
+			<%
+			if (cPage > 1) {
+			%>
+			<a href="list?page=1">◀◀</a>
+			<%
+			}
+
+			int pageSize_v2 = 10; //한 화면에 보여줄 페이지 갯수 -> 10개
+			int pageGroup = (int) Math.ceil((double) cPage / pageSize_v2); // 한번에 보여줄 페이지의 그룹
+			int from_v2 = ((pageGroup - 1) * pageSize_v2) + 1; // 한번에 보여줄 때의 첫번째 페이지 번호
+			int end_v2 = pageGroup * pageSize_v2; // 한번에 보여줄 때의 마지막 페이지 번호
+
+			if (pageGroup * pageSize_v2 > totalPage) {
+			end_v2 = totalPage;
+			}
+
+			if (from_v2 < 1) {
+			from_v2 = 1;
+			}
+
+			if (end_v2 > totalPage) {
+			end_v2 = totalPage;
+			}
+
+			int beforeBtn = cPage - pageSize_v2;
+
+			if (beforeBtn < 1) {
+			beforeBtn = 1;
+			}
+			%>
+			<a href="list?page=<%=beforeBtn%>">◁</a>
+			<%
+			for (int i = from_v2; i <= end_v2; i++) {
+			%>
+			<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
+			<%
+			}
+			int afterBtn = cPage + pageSize_v2;
+			if (afterBtn > totalPage) {
+			afterBtn = totalPage;
+			}
+			%>
+			<a href="list?page=<%=afterBtn%>">▷</a>
+			<%
+			if (cPage < totalPage) {
+			%>
+			<a href="list?page=<%=totalPage%>">▶▶</a>
+			<%
+			}
+			%>
+		</div> --%>
+
 
 
 	<style type="text/css">
