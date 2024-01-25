@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/detail")
 public class ArticleDetailServlet extends HttpServlet {
@@ -54,9 +55,20 @@ public class ArticleDetailServlet extends HttpServlet {
 			sql.append("WHERE id = ?;", id);
 
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+			
+			
+			//작성자 정보 가져오기
+			sql = SecSql.from("SELECT *");
+			sql.append("FROM `member`");
+			sql.append("WHERE id = ?;", articleRow.get("memberId"));
+			
+			Map<String, Object> memberRow = DBUtil.selectRow(conn, sql);
+			
+			
 
 			request.setAttribute("page", page);
 			request.setAttribute("articleRow", articleRow);
+			request.setAttribute("memberRow", memberRow);
 			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 
 		} catch (SQLException e) {

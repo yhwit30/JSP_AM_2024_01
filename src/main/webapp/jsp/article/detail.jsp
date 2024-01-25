@@ -5,6 +5,7 @@
 
 <%
 Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
+Map<String, Object> memberRow = (Map<String, Object>) request.getAttribute("memberRow");
 int cPage = (int) request.getAttribute("page");
 %>
 <!DOCTYPE html>
@@ -24,12 +25,15 @@ int cPage = (int) request.getAttribute("page");
 		</li>
 		<li>제목 : <%=articleRow.get("title")%>
 		</li>
+		<li>작성자 : <%=memberRow.get("name")%>
+		</li>
 		<li>내용 : <%=articleRow.get("body")%>
 		</li>
+		
 	</ul>
 	<div>
 		<a href="modify?id=<%=articleRow.get("id")%>&page=<%=cPage%>">수정</a> 
-		<a href="doDelete?id=<%=articleRow.get("id")%>&page=<%=cPage%>">del</a>
+		<a href="delete?id=<%=articleRow.get("id")%>&page=<%=cPage%>">del</a>
 	</div>
 
 	<div>

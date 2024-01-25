@@ -75,6 +75,14 @@ public class ArticleListServlet extends HttpServlet {
 				loginedMember = (Map<String, Object>) session.getAttribute("loginedMember");
 			}
 
+			
+			//작성자 정보 가져오기
+			sql = SecSql.from("SELECT *");
+			sql.append("FROM `member`;");
+			
+			List<Map<String, Object>> memberRows = DBUtil.selectRows(conn, sql);
+			
+			
 			request.setAttribute("isLogined", isLogined);
 			request.setAttribute("loginedMemberId", loginedMemberId);
 			request.setAttribute("loginedMember", loginedMember);
@@ -83,6 +91,7 @@ public class ArticleListServlet extends HttpServlet {
 			request.setAttribute("page", page);
 			request.setAttribute("totalPage", totalPage);
 			request.setAttribute("articleRows", articleRows);
+			request.setAttribute("memberRows", memberRows);
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 			
 			/////
