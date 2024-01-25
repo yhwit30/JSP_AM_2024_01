@@ -5,6 +5,7 @@
 <%
 Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
 int cPage = (int) request.getAttribute("page");
+int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 %>
 
 <!DOCTYPE html>
@@ -26,6 +27,7 @@ int cPage = (int) request.getAttribute("page");
 		<%=articleRow.get("regDate")%>
 	</div>
 	<form method="POST" action="doModify">
+		<input type="hidden" value="<%=loginedMemberId%>" name="loginedMemberId" />
 		<input type="hidden" value="<%=articleRow.get("id")%>" name="id" />
 		<input type="hidden" value="<%=cPage%>" name="page" />
 		<div>

@@ -3,9 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%
-List<Map<String, Object>> memberRows = (List<Map<String, Object>>) request.getAttribute("memberRows");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +20,7 @@ List<Map<String, Object>> memberRows = (List<Map<String, Object>>) request.getAt
 	<script type="text/javascript">
 		var JoinForm_submitDone = false;
 		function JoinForm_submit(form) {
+			//요청처리
 			if (JoinForm_submitDone) {
 				alert('이미 처리중입니다');
 				return;

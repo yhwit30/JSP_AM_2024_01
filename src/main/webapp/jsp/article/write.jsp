@@ -1,6 +1,9 @@
 <%@ page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%
+int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +15,7 @@
 	<h2>게시물 작성</h2>
 
 	<form method="POST" action="doWrite">
+		<input type="hidden" value="<%=loginedMemberId%>" name="loginedMemberId" />
 		<div>
 			제목 : <input type="text" placeholder="제목을 입력해주세요" name="title" />
 		</div>

@@ -39,4 +39,14 @@
     <servlet-name>asdfasdf</servlet-name>
     <url-pattern>/asdfasdf</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HttpSessionTest</display-name>
+    <servlet-name>HttpSessionTest</servlet-name>
+    <servlet-class>Test.HttpSessionTest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HttpSessionTest</servlet-name>
+    <url-pattern>/HttpSessionTest</url-pattern>
+  </servlet-mapping>
 </web-app>

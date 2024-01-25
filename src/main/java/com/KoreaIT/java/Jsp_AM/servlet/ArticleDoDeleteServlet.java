@@ -35,17 +35,20 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
-			response.getWriter().append("연결 성공!");
 
+		
+			
+			//페이지 정보
 			int page = 1;
 
 			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 			
+			//게시글 id 정보
 			int id = Integer.parseInt(request.getParameter("id"));
 
-			SecSql sql = SecSql.from("DELETE");
+			sql = SecSql.from("DELETE");
 			sql.append("FROM article");
 			sql.append("WHERE id = ?;", id);
 

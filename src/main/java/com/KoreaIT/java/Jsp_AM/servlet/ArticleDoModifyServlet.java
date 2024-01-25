@@ -36,6 +36,21 @@ public class ArticleDoModifyServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
+			int memberId = Integer.parseInt(request.getParameter("loginedMemberId"));
+			
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM article");
+			sql.append("WHERE memberId = ?;", memberId);
+
+			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+			
+			if(articleRow.get("memberId").equals(memberId) == false){
+				response.getWriter()
+				.append(String.format("<script>alert('수정권한이 없습니다.'); location.replace('list');</script>"));
+				return;
+			}
+			
+			
 			//해당 게시글이 있는 목록페이지
 			int page = 1;
 
@@ -48,7 +63,7 @@ public class ArticleDoModifyServlet extends HttpServlet {
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
 
-			SecSql sql = SecSql.from("UPDATE article");
+			sql = SecSql.from("UPDATE article");
 			sql.append("SET ");
 			sql.append("title = ?,", title);
 			sql.append("`body` = ?", body);

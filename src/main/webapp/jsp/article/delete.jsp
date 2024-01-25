@@ -6,6 +6,7 @@
 <%
 Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
 int cPage = (int) request.getAttribute("page");
+
 %>
 <!DOCTYPE html>
 <html>

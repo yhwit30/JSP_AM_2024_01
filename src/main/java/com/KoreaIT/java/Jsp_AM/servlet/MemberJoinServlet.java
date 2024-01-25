@@ -39,14 +39,9 @@ public class MemberJoinServlet extends HttpServlet {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 			
 			////
-			SecSql sql = SecSql.from("SELECT *");
-			sql.append("FROM `member`");
-			sql.append("ORDER BY id DESC;");
 
-			List<Map<String, Object>> memberRows = DBUtil.selectRows(conn, sql);
-
-
-			request.setAttribute("memberRows", memberRows);
+			
+			
 			////
 			
 			request.getRequestDispatcher("/jsp/member/join.jsp").forward(request, response);

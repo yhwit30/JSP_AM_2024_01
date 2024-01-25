@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/delete")
 public class ArticleDeleteServlet extends HttpServlet {
@@ -51,6 +52,8 @@ public class ArticleDeleteServlet extends HttpServlet {
 			sql.append("WHERE id = ?;", id);
 
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+			
+		
 
 			request.setAttribute("page", page);
 			request.setAttribute("articleRow", articleRow);
