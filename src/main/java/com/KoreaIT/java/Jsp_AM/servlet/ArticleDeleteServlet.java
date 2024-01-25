@@ -52,7 +52,7 @@ public class ArticleDeleteServlet extends HttpServlet {
 				loginedMemberId = (int) session.getAttribute("loginedMemberId");
 			}
 
-			// 해당 게시글이 있는 목록페이지
+			// 해당 게시글이 있는 목록페이지 - 목록 돌아갈 때 필요
 			int page = 1;
 
 			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
@@ -88,7 +88,6 @@ public class ArticleDeleteServlet extends HttpServlet {
 			response.getWriter()
 					.append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list?page=%d');</script>", id, page));
 
-	
 	
 
 		} catch (SQLException e) {

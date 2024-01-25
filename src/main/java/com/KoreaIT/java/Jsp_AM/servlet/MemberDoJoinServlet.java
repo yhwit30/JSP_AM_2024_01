@@ -35,7 +35,7 @@ public class MemberDoJoinServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
-			///
+			//아이디 중복체크
 			String loginId = request.getParameter("loginId");
 			String loginPw = request.getParameter("loginPw");
 			String name = request.getParameter("name");
@@ -51,7 +51,7 @@ public class MemberDoJoinServlet extends HttpServlet {
 				return;
 			}
 			
-
+			//회원정보 DB에 넣는 쿼리
 			sql = SecSql.from("INSERT INTO `member`");
 			sql.append("SET regDate = NOW(),");
 			sql.append("loginId = ?,", loginId);

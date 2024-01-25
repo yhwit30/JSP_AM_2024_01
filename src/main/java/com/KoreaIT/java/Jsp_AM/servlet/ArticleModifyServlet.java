@@ -52,7 +52,7 @@ public class ArticleModifyServlet extends HttpServlet {
 				loginedMemberId = (int) session.getAttribute("loginedMemberId");
 			}
 
-			// 해당 게시글이 있는 목록페이지
+			// 해당 게시글이 있는 목록페이지 - 목록 돌아갈 때 필요
 			int page = 1;
 
 			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {

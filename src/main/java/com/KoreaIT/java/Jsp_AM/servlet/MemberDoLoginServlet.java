@@ -48,18 +48,21 @@ public class MemberDoLoginServlet extends HttpServlet {
 			
 			Map<String, Object> memberRow = DBUtil.selectRow(conn, sql);
 			
+			//아이디 존재여부 체크
 			if(memberRow.isEmpty()) {
 				response.getWriter().append(String.format(
 						"<script>alert('%s 아이디는 없는 아이디야'); location.replace('../member/login');</script>", loginId));
 				return;
 			}
 			
+			//비밀번호 체크
 			if(memberRow.get("loginPw").equals(loginPw)==false) {
 				response.getWriter().append(String.format(
 						"<script>alert('비밀번호 틀렸어'); location.replace('../member/login');</script>"));
 				return;
 			}
-		
+			
+			//세션에 로그인 상태정보 저장
 			HttpSession session = request.getSession();
 			session.setAttribute("loginedMemberId", memberRow.get("id"));
 			session.setAttribute("loginedMemberLoginId", memberRow.get("loginId"));
