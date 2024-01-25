@@ -38,26 +38,28 @@ public class ArticleModifyServlet extends HttpServlet {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
 			// 로그인이 되어 있는지 확인
-			int loginedMemberId = Integer.parseInt(request.getParameter("loginedMemberId"));
-
-			if (loginedMemberId == -1) {
+			HttpSession session = request.getSession();
+			if (session.getAttribute("loginedMemberId") == null) {
 				response.getWriter().append(
-						String.format("<script>alert('권한이 없습니다. 로그인하고 이용해주세요.'); location.replace('list');</script>"));
+						String.format("<script>alert('로그인 후 이용해주세요.'); location.replace('../member/login');</script>"));
 				return;
 			}
 
-			request.setAttribute("loginedMemberId", loginedMemberId);
-			
-			
-			
-			//해당 게시글이 있는 목록페이지
+			// 현 로그인 id 정보 가져오기
+			int loginedMemberId = -1;
+
+			if (session.getAttribute("loginedMemberId") != null) {
+				loginedMemberId = (int) session.getAttribute("loginedMemberId");
+			}
+
+			// 해당 게시글이 있는 목록페이지
 			int page = 1;
 
 			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
-			
-			//해당 게시글 가져오기
+
+			// 해당 게시글 가져오기
 			int id = Integer.parseInt(request.getParameter("id"));
 
 			SecSql sql = SecSql.from("SELECT *");
@@ -65,9 +67,19 @@ public class ArticleModifyServlet extends HttpServlet {
 			sql.append("WHERE id = ?;", id);
 
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
-			
+
+			// 해당 게시글 작성자와 현 로그인 id 확인하기
+
+			if (articleRow.get("memberId").equals(loginedMemberId) == false) {
+				response.getWriter()
+				.append(String.format("<script>alert('%d번 글은 수정권한이 없습니다.'); location.replace('list?page=%d');</script>", id, page));
+				return;
+			}
+
+			request.setAttribute("loginedMemberId", loginedMemberId);
 			request.setAttribute("page", page);
 			request.setAttribute("articleRow", articleRow);
+
 			request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
 
 		} catch (SQLException e) {

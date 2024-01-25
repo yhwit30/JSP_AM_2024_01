@@ -45,6 +45,8 @@ public class ArticleDetailServlet extends HttpServlet {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 			
+			
+			//해당 게시글 가져오기
 			int id = Integer.parseInt(request.getParameter("id"));
 
 			SecSql sql = SecSql.from("SELECT *");

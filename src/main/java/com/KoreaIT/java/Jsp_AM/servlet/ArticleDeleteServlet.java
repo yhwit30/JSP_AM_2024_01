@@ -37,6 +37,21 @@ public class ArticleDeleteServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
+			// 로그인이 되어 있는지 확인
+			HttpSession session = request.getSession();
+			if (session.getAttribute("loginedMemberId") == null) {
+				response.getWriter().append(
+						String.format("<script>alert('로그인 후 이용해주세요.'); location.replace('../member/login');</script>"));
+				return;
+			}
+
+			// 현 로그인 id 정보 가져오기
+			int loginedMemberId = -1;
+
+			if (session.getAttribute("loginedMemberId") != null) {
+				loginedMemberId = (int) session.getAttribute("loginedMemberId");
+			}
+
 			// 해당 게시글이 있는 목록페이지
 			int page = 1;
 
@@ -52,12 +67,29 @@ public class ArticleDeleteServlet extends HttpServlet {
 			sql.append("WHERE id = ?;", id);
 
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
-			
-		
 
-			request.setAttribute("page", page);
-			request.setAttribute("articleRow", articleRow);
-			request.getRequestDispatcher("/jsp/article/delete.jsp").forward(request, response);
+			// 해당 게시글 작성자와 현 로그인 id 확인하기
+
+			if (articleRow.get("memberId").equals(loginedMemberId) == false) {
+				response.getWriter().append(String.format(
+						"<script>alert('%d번 글은 수정권한이 없습니다.'); location.replace('list?page=%d');</script>", id, page));
+				return;
+			}
+
+			
+			//게시글 id 삭제 쿼리 날리기
+
+			sql = SecSql.from("DELETE");
+			sql.append("FROM article");
+			sql.append("WHERE id = ?;", id);
+
+			DBUtil.delete(conn, sql);
+
+			response.getWriter()
+					.append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list?page=%d');</script>", id, page));
+
+	
+	
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);

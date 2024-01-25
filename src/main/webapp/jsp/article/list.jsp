@@ -18,6 +18,8 @@ Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("
 <title>게시물 목록</title>
 </head>
 <body>
+	<div><%=loginedMemberId%>번, 회원 로그인 중
+	</div>
 	<div>
 		<a style="color: green" href="../home/main">메인으로 돌아가기</a>
 	</div>

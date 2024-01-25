@@ -24,43 +24,8 @@ public class MemberJoinServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		// DB연결
-		try {
-			Class.forName(Config.getDbDriverClassName());
-		} catch (ClassNotFoundException e) {
-			System.out.println("클래스가 없습니다.");
-			e.printStackTrace();
-		}
-
-
-		Connection conn = null;
-
-		try {
-			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
-			
-			////
-
-			
-			
-			////
 			
 			request.getRequestDispatcher("/jsp/member/join.jsp").forward(request, response);
-			
-			
-		} catch (SQLException e) {
-			System.out.println("에러 : " + e);
-		} catch (SQLErrorException e) {
-			e.getOrigin().printStackTrace();
-
-		} finally {
-			try {
-				if (conn != null && !conn.isClosed()) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 

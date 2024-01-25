@@ -25,6 +25,7 @@ public class ArticleWriteServlet extends HttpServlet {
 			return;
 		}
 		
+		// 현 로그인 id 정보 가져오기
 		int loginedMemberId = -1;
 
 		if (session.getAttribute("loginedMemberId") != null) {
