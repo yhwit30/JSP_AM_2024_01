@@ -15,13 +15,12 @@ int totalPage = (int) request.getAttribute("totalPage");
 <title>게시물 목록</title>
 </head>
 <body>
-
 	<div>
-		<a href="../home/main">메인으로 이동</a>
+		<a style="color: green" href="../home/main">메인으로 돌아가기</a>
 	</div>
-	
+
 	<br>
-	
+
 	<div>
 		<a href="write">글쓰기</a>
 	</div>
@@ -155,7 +154,7 @@ int totalPage = (int) request.getAttribute("totalPage");
 
 
 	</div>
-<%-- <div class="page"> //강사버전
+	<%-- <div class="page"> //강사버전
 			<%
 			if (cPage > 1) {
 			%>

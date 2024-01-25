@@ -37,12 +37,14 @@ public class ArticleListServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
+			//해당 게시글이 있는 목록페이지
 			int page = 1;
 
 			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 
+			//목록에 몇 개의 게시글을 보여줄 지
 			int itemsInAPage = 10;
 			int limitFrom = (page - 1) * itemsInAPage;
 
@@ -63,7 +65,8 @@ public class ArticleListServlet extends HttpServlet {
 			request.setAttribute("totalPage", totalPage);
 			request.setAttribute("articleRows", articleRows);
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
-
+			
+			/////
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
 		} catch (SQLErrorException e) {

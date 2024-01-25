@@ -12,7 +12,7 @@
 	<h1>MAIN</h1>
 
 	<div>
-		<a href="../test">testing</a>
+		<a href="../test">test</a>
 	</div>
 
 	<ul>

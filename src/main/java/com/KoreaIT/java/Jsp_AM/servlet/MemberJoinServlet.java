@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import com.KoreaIT.java.Jsp_AM.config.Config;
 import com.KoreaIT.java.Jsp_AM.exception.SQLErrorException;
@@ -37,10 +39,18 @@ public class MemberJoinServlet extends HttpServlet {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 			
 			////
-			
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM `member`");
+			sql.append("ORDER BY id DESC;");
+
+			List<Map<String, Object>> memberRows = DBUtil.selectRows(conn, sql);
+
+
+			request.setAttribute("memberRows", memberRows);
+			////
 			
 			request.getRequestDispatcher("/jsp/member/join.jsp").forward(request, response);
-			////
+			
 			
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
