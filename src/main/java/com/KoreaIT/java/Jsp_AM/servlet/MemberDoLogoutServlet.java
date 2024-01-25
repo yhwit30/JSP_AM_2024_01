@@ -39,7 +39,14 @@ public class MemberDoLogoutServlet extends HttpServlet {
 
 			///
 		
+			// 로그인이 되어 있는지 확인
 			HttpSession session = request.getSession();
+			if (session.getAttribute("loginedMemberId") == null) {
+				response.getWriter().append(String
+						.format("<script>alert('로그인 후 이용해주세요.'); location.replace('../home/main');</script>"));
+				return;
+			}
+			
 			session.removeAttribute("loginedMemberId");
 			session.removeAttribute("loginedMemberLoginId");
 			session.removeAttribute("loginedMember");

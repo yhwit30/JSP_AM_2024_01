@@ -37,11 +37,18 @@ public class ArticleDeleteServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
+			// 해당 게시글이 있는 목록페이지 - 목록 돌아갈 때 필요
+			int page = 1;
+
+			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+
 			// 로그인이 되어 있는지 확인
 			HttpSession session = request.getSession();
 			if (session.getAttribute("loginedMemberId") == null) {
-				response.getWriter().append(
-						String.format("<script>alert('로그인 후 이용해주세요.'); location.replace('../member/login');</script>"));
+				response.getWriter().append(String
+						.format("<script>alert('로그인 후 이용해주세요.'); location.replace('list?page=%d');</script>", page));
 				return;
 			}
 
@@ -50,13 +57,6 @@ public class ArticleDeleteServlet extends HttpServlet {
 
 			if (session.getAttribute("loginedMemberId") != null) {
 				loginedMemberId = (int) session.getAttribute("loginedMemberId");
-			}
-
-			// 해당 게시글이 있는 목록페이지 - 목록 돌아갈 때 필요
-			int page = 1;
-
-			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
-				page = Integer.parseInt(request.getParameter("page"));
 			}
 
 			// 해당 게시글 찾기
@@ -76,8 +76,7 @@ public class ArticleDeleteServlet extends HttpServlet {
 				return;
 			}
 
-			
-			//게시글 id 삭제 쿼리 날리기
+			// 게시글 id 삭제 쿼리 날리기
 
 			sql = SecSql.from("DELETE");
 			sql.append("FROM article");
@@ -85,10 +84,8 @@ public class ArticleDeleteServlet extends HttpServlet {
 
 			DBUtil.delete(conn, sql);
 
-			response.getWriter()
-					.append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list?page=%d');</script>", id, page));
-
-	
+			response.getWriter().append(String
+					.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list?page=%d');</script>", id, page));
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
