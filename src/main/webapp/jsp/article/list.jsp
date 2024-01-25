@@ -5,7 +5,6 @@
 
 <%
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
-List<Map<String, Object>> memberRows = (List<Map<String, Object>>) request.getAttribute("memberRows");
 int cPage = (int) request.getAttribute("page");
 int totalPage = (int) request.getAttribute("totalPage");
 boolean isLogined = (boolean) request.getAttribute("isLogined");
@@ -46,18 +45,10 @@ Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("
 			</tr>
 		</thead>
 		<tbody>
-		
-		
-		
+
 			<%
 			for (Map<String, Object> articleRow : articleRows) {
-				String name = null;
-				for(Map<String, Object> memberRow : memberRows){
-					if(articleRow.get("memberId").equals(memberRow.get("id"))){
-						name = (String) memberRow.get("name");
-					}
-		}
-			%>
+				%>
 			<tr style="text-align: center;">
 				<td><%=articleRow.get("id")%></td>
 				<td><%=articleRow.get("regDate")%></td>
@@ -67,7 +58,7 @@ Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("
 					href="modify?id=<%=articleRow.get("id")%>&page=<%=cPage%>">수정</a></td>
 				<td><a
 					href="delete?id=<%=articleRow.get("id")%>&page=<%=cPage%>">del</a></td>
-				<td><%=name%></td>
+				<td><%=articleRow.get("writer")%></td>
 			</tr>
 			<%
 			}
