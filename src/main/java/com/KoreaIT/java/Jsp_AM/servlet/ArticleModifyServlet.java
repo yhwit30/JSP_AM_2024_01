@@ -32,13 +32,24 @@ public class ArticleModifyServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		
-
 		Connection conn = null;
 
 		try {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
+			// 로그인이 되어 있는지 확인
+			int loginedMemberId = Integer.parseInt(request.getParameter("loginedMemberId"));
+
+			if (loginedMemberId == -1) {
+				response.getWriter().append(
+						String.format("<script>alert('권한이 없습니다. 로그인하고 이용해주세요.'); location.replace('list');</script>"));
+				return;
+			}
+
+			request.setAttribute("loginedMemberId", loginedMemberId);
+			
+			
+			
 			//해당 게시글이 있는 목록페이지
 			int page = 1;
 
@@ -55,16 +66,6 @@ public class ArticleModifyServlet extends HttpServlet {
 
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 			
-			//로그인 정보 가져오기
-			HttpSession session = request.getSession();
-
-			int loginedMemberId = -1;
-
-			if (session.getAttribute("loginedMemberId") != null) {
-				loginedMemberId = (int) session.getAttribute("loginedMemberId");
-			}
-
-			request.setAttribute("loginedMemberId", loginedMemberId);
 			request.setAttribute("page", page);
 			request.setAttribute("articleRow", articleRow);
 			request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);

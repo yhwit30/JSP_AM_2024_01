@@ -7,6 +7,9 @@
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
 int cPage = (int) request.getAttribute("page");
 int totalPage = (int) request.getAttribute("totalPage");
+boolean isLogined = (boolean) request.getAttribute("isLogined");
+int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("loginedMember");
 %>
 <!DOCTYPE html>
 <html>
@@ -24,7 +27,6 @@ int totalPage = (int) request.getAttribute("totalPage");
 	<div>
 		<a href="write">글쓰기</a>
 	</div>
-
 
 	<h2>게시물 목록</h2>
 
@@ -239,4 +241,3 @@ h2 {
 
 </body>
 </html>
-

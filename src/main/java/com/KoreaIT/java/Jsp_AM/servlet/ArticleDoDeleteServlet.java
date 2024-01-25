@@ -48,7 +48,7 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 			//게시글 id 정보
 			int id = Integer.parseInt(request.getParameter("id"));
 
-			sql = SecSql.from("DELETE");
+			SecSql sql = SecSql.from("DELETE");
 			sql.append("FROM article");
 			sql.append("WHERE id = ?;", id);
 

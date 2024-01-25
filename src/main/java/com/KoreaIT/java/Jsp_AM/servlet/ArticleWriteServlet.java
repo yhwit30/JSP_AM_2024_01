@@ -15,19 +15,25 @@ public class ArticleWriteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
 
-		//로그인 정보 가져오기
+		// 로그인이 되어 있는지 확인
 		HttpSession session = request.getSession();
-
+		if(session.getAttribute("loginedMemberId") == null){
+			response.getWriter()
+			.append(String.format("<script>alert('로그인 후 이용해주세요.'); location.replace('../member/login');</script>"));
+			return;
+		}
+		
 		int loginedMemberId = -1;
 
 		if (session.getAttribute("loginedMemberId") != null) {
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		}
-
 		request.setAttribute("loginedMemberId", loginedMemberId);
 
 		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

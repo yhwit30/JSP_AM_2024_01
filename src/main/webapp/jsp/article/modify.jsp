@@ -27,8 +27,8 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 		<%=articleRow.get("regDate")%>
 	</div>
 	<form method="POST" action="doModify">
-		<input type="hidden" value="<%=loginedMemberId%>" name="loginedMemberId" />
-		<input type="hidden" value="<%=articleRow.get("id")%>" name="id" />
+		<input type="hidden" value="<%=loginedMemberId%>" name="loginedMemberId" /> 
+		<input type="hidden" value="<%=articleRow.get("id")%>" name="id" /> 
 		<input type="hidden" value="<%=cPage%>" name="page" />
 		<div>
 			제목 : <input type="text" name="title"
