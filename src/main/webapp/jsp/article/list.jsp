@@ -1,10 +1,11 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map"%>
+<%@ page import="com.KoreaIT.java.Jsp_AM.dto.Article"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
-List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
+List<Article> articles = (List<Article>) request.getAttribute("articles");
 int cPage = (int) request.getAttribute("page");
 int totalPage = (int) request.getAttribute("totalPage");
 boolean isLogined = (boolean) request.getAttribute("isLogined");
@@ -47,18 +48,15 @@ Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("
 		<tbody>
 
 			<%
-			for (Map<String, Object> articleRow : articleRows) {
+			for (Article article : articles) {
 			%>
 			<tr style="text-align: center;">
-				<td><%=articleRow.get("id")%></td>
-				<td><%=articleRow.get("regDate")%></td>
-				<td><a
-					href="detail?id=<%=articleRow.get("id")%>&page=<%=cPage%>"><%=articleRow.get("title")%></a></td>
-				<td><a
-					href="modify?id=<%=articleRow.get("id")%>&page=<%=cPage%>">수정</a></td>
-				<td><a
-					href="delete?id=<%=articleRow.get("id")%>&page=<%=cPage%>">del</a></td>
-				<td><%=articleRow.get("writer")%></td>
+				<td><%=article.getId()%></td>
+				<td><%=article.getRegDate()%></td>
+				<td><a href="detail?id=<%=article.getId()%>"><%=article.getTitle()%></a></td>
+				<td><%=article.getExtra__writer()%></td>
+				<td><a href="modify?id=<%=article.getId()%>">수정</a></td>
+				<td><a href="doDelete?id=<%=article.getId()%>">del</a></td>
 			</tr>
 			<%
 			}

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import com.KoreaIT.java.Jsp_AM.dto.Article;
 import com.KoreaIT.java.Jsp_AM.service.ArticleService;
 import com.KoreaIT.java.Jsp_AM.util.DBUtil;
 import com.KoreaIT.java.Jsp_AM.util.SecSql;
@@ -41,7 +42,7 @@ public class ArticleController {
 		// 목록에 몇 개의 게시글을 보여줄 지
 		int itemsInAPage = articleService.getItemsInAPage();
 		int totalPage = articleService.getTotalPage();
-		List<Map<String, Object>> articleRows = articleService.getForPrintArticles(page);
+		List<Article> articles = articleService.getForPrintArticles(page);
 
 		// 로그인 정보 가져오기
 		HttpSession session = request.getSession();
@@ -62,7 +63,7 @@ public class ArticleController {
 		request.setAttribute("loginedMember", loginedMember);
 		request.setAttribute("page", page);
 		request.setAttribute("totalPage", totalPage);
-		request.setAttribute("articleRows", articleRows);
+		request.setAttribute("articles", articles);
 		request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 
 		/////
