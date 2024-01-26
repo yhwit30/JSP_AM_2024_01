@@ -19,14 +19,14 @@ public class ArticleController {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Connection conn;
-	
+
 	private ArticleService articleService;
 
 	public ArticleController(HttpServletRequest request, HttpServletResponse response, Connection conn) {
 		this.conn = conn;
 		this.request = request;
 		this.response = response;
-		
+
 		this.articleService = new ArticleService(conn);
 	}
 
@@ -37,12 +37,10 @@ public class ArticleController {
 		if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
-		
+
 		// 목록에 몇 개의 게시글을 보여줄 지
 		int itemsInAPage = articleService.getItemsInAPage();
-
 		int totalPage = articleService.getTotalPage();
-
 		List<Map<String, Object>> articleRows = articleService.getForPrintArticles(page);
 
 		// 로그인 정보 가져오기
@@ -118,7 +116,7 @@ public class ArticleController {
 		if (session.getAttribute("loginedMemberId") != null) {
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		}
-		
+
 		// jsp에 넘겨주기
 		request.setAttribute("loginedMemberId", loginedMemberId);
 		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
