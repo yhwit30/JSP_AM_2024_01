@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import com.KoreaIT.java.Jsp_AM.service.ArticleService;
 import com.KoreaIT.java.Jsp_AM.util.DBUtil;
 import com.KoreaIT.java.Jsp_AM.util.SecSql;
 
@@ -18,11 +19,15 @@ public class ArticleController {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Connection conn;
+	
+	private ArticleService articleService;
 
 	public ArticleController(HttpServletRequest request, HttpServletResponse response, Connection conn) {
 		this.conn = conn;
 		this.request = request;
 		this.response = response;
+		
+		this.articleService = new ArticleService(conn);
 	}
 
 	public void showList() throws ServletException, IOException {
@@ -32,26 +37,13 @@ public class ArticleController {
 		if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
-
+		
 		// 목록에 몇 개의 게시글을 보여줄 지
-		int itemsInAPage = 10;
-		int limitFrom = (page - 1) * itemsInAPage;
+		int itemsInAPage = articleService.getItemsInAPage();
 
-		SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
-		sql.append("FROM article");
+		int totalPage = articleService.getTotalPage();
 
-		int totalCnt = DBUtil.selectRowIntValue(conn, sql);
-		int totalPage = (int) Math.ceil(totalCnt / (double) itemsInAPage);
-
-		// 전 게시글 가져오는 쿼리
-		sql = SecSql.from("SELECT A.*, M.name AS writer");
-		sql.append("FROM article AS A");
-		sql.append("INNER JOIN `member` AS M");
-		sql.append("ON A.memberId = M.id");
-		sql.append("ORDER BY id DESC");
-		sql.append("LIMIT ?, ?;", limitFrom, itemsInAPage);
-
-		List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
+		List<Map<String, Object>> articleRows = articleService.getForPrintArticles(page);
 
 		// 로그인 정보 가져오기
 		HttpSession session = request.getSession();
@@ -66,10 +58,10 @@ public class ArticleController {
 			loginedMember = (Map<String, Object>) session.getAttribute("loginedMember");
 		}
 
+		// jsp에 넘겨주기
 		request.setAttribute("isLogined", isLogined);
 		request.setAttribute("loginedMemberId", loginedMemberId);
 		request.setAttribute("loginedMember", loginedMember);
-
 		request.setAttribute("page", page);
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("articleRows", articleRows);
@@ -103,6 +95,7 @@ public class ArticleController {
 
 		Map<String, Object> memberRow = DBUtil.selectRow(conn, sql);
 
+		// jsp에 넘겨주기
 		request.setAttribute("page", page);
 		request.setAttribute("articleRow", articleRow);
 		request.setAttribute("memberRow", memberRow);
@@ -125,8 +118,9 @@ public class ArticleController {
 		if (session.getAttribute("loginedMemberId") != null) {
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		}
+		
+		// jsp에 넘겨주기
 		request.setAttribute("loginedMemberId", loginedMemberId);
-
 		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
 
 	}
@@ -171,10 +165,10 @@ public class ArticleController {
 			return;
 		}
 
+		// jsp에 넘겨주기
 		request.setAttribute("loginedMemberId", loginedMemberId);
 		request.setAttribute("page", page);
 		request.setAttribute("articleRow", articleRow);
-
 		request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
 
 	}
