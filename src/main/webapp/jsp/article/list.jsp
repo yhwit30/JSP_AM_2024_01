@@ -48,7 +48,7 @@ Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("
 
 			<%
 			for (Map<String, Object> articleRow : articleRows) {
-				%>
+			%>
 			<tr style="text-align: center;">
 				<td><%=articleRow.get("id")%></td>
 				<td><%=articleRow.get("regDate")%></td>
@@ -67,6 +67,76 @@ Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("
 	</table>
 
 	<br>
+	<div class="page page2">
+		<%
+		int pageSize = 10;
+		int from = ((cPage - 1) / pageSize) * pageSize + 1;
+		int end = from + pageSize - 1;
+		if (end > totalPage) {
+			end = totalPage;
+		}
+
+		if (cPage > 1) {
+		%>
+		<a href="list?page=1">맨앞</a> &nbsp; &nbsp;
+		<%
+		}
+
+		if (from > pageSize) {
+		%>
+		<a href="list?page=<%=from - 1%>">◀</a>
+		<%
+		}
+
+		for (int i = from; i <= end; i++) {
+		%>
+		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
+		<%
+		}
+
+		if (end < totalPage) {
+		%>
+		<a href="list?page=<%=from + pageSize%>">▶</a>
+		<%
+		}
+
+		if (cPage < totalPage) {
+		%>
+		&nbsp;&nbsp;<a href="list?page=<%=totalPage%>">맨뒤</a>
+		<%
+		}
+		%>
+
+
+	</div>
+
+	<style type="text/css">
+h2 {
+	text-align: center;
+}
+
+.table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.page {
+	font-size: 1rem;
+	text-align: center;
+}
+
+.page>a {
+	color: black;
+	text-decoration: none;
+}
+
+.page>a.cPage {
+	color: red;
+	text-decoration: underline;
+	font-size: 1.2rem;
+}
+</style>
+
 	<%-- <div class="page"> //첨 생각한 페이징
 		<%
 		int pageWide = 3; //페이지 보여줄 좌우 각 범위
@@ -117,50 +187,6 @@ Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("
 		%>
 	</div> --%>
 
-	<br>
-
-	<div class="page page2">
-		<%
-		int pageSize = 10;
-		int from = ((cPage - 1) / pageSize) * pageSize + 1;
-		int end = from + pageSize - 1;
-		if (end > totalPage) {
-			end = totalPage;
-		}
-
-		if (cPage > 1) {
-		%>
-		<a href="list?page=1">맨앞</a> &nbsp; &nbsp;
-		<%
-		}
-
-		if (from > pageSize) {
-		%>
-		<a href="list?page=<%=from - 1%>">◀</a>
-		<%
-		}
-
-		for (int i = from; i <= end; i++) {
-		%>
-		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
-		<%
-		}
-
-		if (end < totalPage) {
-		%>
-		<a href="list?page=<%=from + pageSize%>">▶</a>
-		<%
-		}
-
-		if (cPage < totalPage) {
-		%>
-		&nbsp;&nbsp;<a href="list?page=<%=totalPage%>">맨뒤</a>
-		<%
-		}
-		%>
-
-
-	</div>
 	<%-- <div class="page"> //강사버전
 			<%
 			if (cPage > 1) {
@@ -216,32 +242,6 @@ Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("
 
 
 
-	<style type="text/css">
-h2 {
-	text-align: center;
-}
-
-.table {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.page {
-	font-size: 1rem;
-	text-align: center;
-}
-
-.page>a {
-	color: black;
-	text-decoration: none;
-}
-
-.page>a.cPage {
-	color: red;
-	text-decoration: underline;
-	font-size: 1.2rem;
-}
-</style>
 
 
 </body>
