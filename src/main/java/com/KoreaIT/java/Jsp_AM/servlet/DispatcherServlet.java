@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.KoreaIT.java.Jsp_AM.config.Config;
 import com.KoreaIT.java.Jsp_AM.controller.ArticleController;
+import com.KoreaIT.java.Jsp_AM.controller.MemberController;
 import com.KoreaIT.java.Jsp_AM.exception.SQLErrorException;
 
 import jakarta.servlet.ServletException;
@@ -76,6 +77,20 @@ public class DispatcherServlet extends HttpServlet {
 
 				if (actionMethodName.equals("list")) {
 					articleController.showList();
+				} else if (actionMethodName.equals("detail")) {
+					articleController.showDetail();
+				} else if (actionMethodName.equals("write")) {
+					articleController.goToWrite();
+				} else if (actionMethodName.equals("modify")) {
+					articleController.goToModify();
+				}
+			} else if (controllerName.equals("member")) {
+				MemberController memberController = new MemberController(request, response, conn);
+
+				if (actionMethodName.equals("join")) {
+					memberController.goToJoin();
+				} else if (actionMethodName.equals("login")) {
+					memberController.goToLogin();
 				}
 			}
 

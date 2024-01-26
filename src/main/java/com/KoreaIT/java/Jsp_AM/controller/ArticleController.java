@@ -33,7 +33,7 @@ public class ArticleController {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 
-		//목록에 몇 개의 게시글을 보여줄 지
+		// 목록에 몇 개의 게시글을 보여줄 지
 		int itemsInAPage = 10;
 		int limitFrom = (page - 1) * itemsInAPage;
 
@@ -43,7 +43,7 @@ public class ArticleController {
 		int totalCnt = DBUtil.selectRowIntValue(conn, sql);
 		int totalPage = (int) Math.ceil(totalCnt / (double) itemsInAPage);
 
-		//전 게시글 가져오는 쿼리
+		// 전 게시글 가져오는 쿼리
 		sql = SecSql.from("SELECT A.*, M.name AS writer");
 		sql.append("FROM article AS A");
 		sql.append("INNER JOIN `member` AS M");
@@ -52,10 +52,10 @@ public class ArticleController {
 		sql.append("LIMIT ?, ?;", limitFrom, itemsInAPage);
 
 		List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
-		
-		//로그인 정보 가져오기
+
+		// 로그인 정보 가져오기
 		HttpSession session = request.getSession();
-		
+
 		boolean isLogined = false;
 		int loginedMemberId = -1;
 		Map<String, Object> loginedMember = null;
@@ -66,7 +66,6 @@ public class ArticleController {
 			loginedMember = (Map<String, Object>) session.getAttribute("loginedMember");
 		}
 
-		
 		request.setAttribute("isLogined", isLogined);
 		request.setAttribute("loginedMemberId", loginedMemberId);
 		request.setAttribute("loginedMember", loginedMember);
@@ -75,9 +74,109 @@ public class ArticleController {
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("articleRows", articleRows);
 		request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
-		
+
 		/////
-		
+
+	}
+
+	public void showDetail() throws ServletException, IOException {
+		// 해당 게시글이 있는 목록페이지 - 목록 돌아갈 때 필요
+		int page = 1;
+
+		if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+
+		// 해당 게시글 가져오기
+		int id = Integer.parseInt(request.getParameter("id"));
+
+		SecSql sql = SecSql.from("SELECT *");
+		sql.append("FROM article");
+		sql.append("WHERE id = ?;", id);
+
+		Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+
+		// 작성자 정보 가져오기
+		sql = SecSql.from("SELECT *");
+		sql.append("FROM `member`");
+		sql.append("WHERE id = ?;", articleRow.get("memberId"));
+
+		Map<String, Object> memberRow = DBUtil.selectRow(conn, sql);
+
+		request.setAttribute("page", page);
+		request.setAttribute("articleRow", articleRow);
+		request.setAttribute("memberRow", memberRow);
+		request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
+
+	}
+
+	public void goToWrite() throws ServletException, IOException {
+		// 로그인이 되어 있는지 확인
+		HttpSession session = request.getSession();
+		if (session.getAttribute("loginedMemberId") == null) {
+			response.getWriter().append(
+					String.format("<script>alert('로그인 후 이용해주세요.'); location.replace('../member/login');</script>"));
+			return;
+		}
+
+		// 현 로그인 id 정보 가져오기
+		int loginedMemberId = -1;
+
+		if (session.getAttribute("loginedMemberId") != null) {
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
+		request.setAttribute("loginedMemberId", loginedMemberId);
+
+		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
+
+	}
+
+	public void goToModify() throws IOException, ServletException {
+		// 해당 게시글이 있는 목록페이지 - 목록 돌아갈 때 필요
+		int page = 1;
+
+		if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+
+		// 로그인이 되어 있는지 확인
+		HttpSession session = request.getSession();
+		if (session.getAttribute("loginedMemberId") == null) {
+			response.getWriter().append(
+					String.format("<script>alert('로그인 후 이용해주세요.'); location.replace('list?page=%d');</script>", page));
+			return;
+		}
+
+		// 현 로그인 id 정보 가져오기
+		int loginedMemberId = -1;
+
+		if (session.getAttribute("loginedMemberId") != null) {
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
+
+		// 해당 게시글 가져오기
+		int id = Integer.parseInt(request.getParameter("id"));
+
+		SecSql sql = SecSql.from("SELECT *");
+		sql.append("FROM article");
+		sql.append("WHERE id = ?;", id);
+
+		Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+
+		// 해당 게시글 작성자와 현 로그인 id 확인하기
+
+		if (articleRow.get("memberId").equals(loginedMemberId) == false) {
+			response.getWriter().append(String.format(
+					"<script>alert('%d번 글은 수정권한이 없습니다.'); location.replace('list?page=%d');</script>", id, page));
+			return;
+		}
+
+		request.setAttribute("loginedMemberId", loginedMemberId);
+		request.setAttribute("page", page);
+		request.setAttribute("articleRow", articleRow);
+
+		request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
+
 	}
 
 }
