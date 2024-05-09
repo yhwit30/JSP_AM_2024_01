@@ -1,0 +1,19 @@
+## jsp를 이용한 회원 + 게시글 프로젝트
+
+- jsp(JavaServer Pages) : HTML 코드에 JAVA 코드를 넣어 동적웹페이지를 생성하는 웹어플리케이션 도구
+
+jsp를 사용하면 아래 코드와 같이 <% %>을 사용해 html 안에서도 자바코드를 사용할 수 있다.
+
+![image](https://github.com/yhwit30/JSP_AM_2024_01/assets/153142837/759214a5-5c87-4e93-a588-e72f71298df9)
+
+<br>
+→ 실행결과 
+
+<img src="https://private-user-images.githubusercontent.com/153146836/329126292-141fd50b-d7ea-4eb3-8a7b-afebdf6742d4.PNG?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTUyMjkyNDEsIm5iZiI6MTcxNTIyODk0MSwicGF0aCI6Ii8xNTMxNDY4MzYvMzI5MTI2MjkyLTE0MWZkNTBiLWQ3ZWEtNGViMy04YTdiLWFmZWJkZjY3NDJkNC5QTkc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwNTA5JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDUwOVQwNDI5MDFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iZGY2MzY5NzY0NmM1ZWMyOTM0ODM2MWY5ZDI1Njg0NjU5ZGU3MDVmMDI3ZWE3YjdjOTc1MGI0YjNhMmViOTg1JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.O6IVcYxZeo8nwwz45tvbaDpgcLTAjruSCztk_BSW5q8">
+
+
+
+
+
+
+
