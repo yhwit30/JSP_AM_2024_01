@@ -1,3 +1,10 @@
+ ## 개발환경
+java 17 <br>
+HTML,CSS,JS <br>
+spring <br>
+mySQL
+
+
 ## jsp를 이용한 회원 + 게시글 프로젝트
 
 - jsp(JavaServer Pages) : HTML 코드에 JAVA 코드를 넣어 동적웹페이지를 생성하는 웹어플리케이션 도구
